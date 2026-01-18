@@ -24,7 +24,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 2. Use `VhdTool` (provided) to append a .vhd footer (just a few extra bytes) to the image file, rename it to `TinyWin11_23H2_English.img.vhd` and mount it in the system (using Explorer or DiskPart).
 
-3. Start [Rufus](https://rufus.ie/en/) and let it "burn" a Windows setup .iso onto this mounted image. Use "GPT" as partition scheme, "UEFI (non CSM)" as target system, "NTFS" as file system and (optional) "TinyWin11" as volume label.
+3. Start [Rufus](https://rufus.ie/en/) and let it "burn" `Win11_23H2_English_x64v2.iso` (or some other Windows 11 setup .iso) onto this mounted image. Use "GPT" as partition scheme, "UEFI (non CSM)" as target system, "NTFS" as file system and (optional) "TinyWin11" as volume label.
 
 4. When `Rufus` is done, navigate to the new Windows setup volume and in folder `sources` delete everything except for `boot.wim`. You can also delete file `setup.exe` and folder `support` in the root directory.
 
@@ -41,4 +41,4 @@ of this volume. This optional step allows to zip/7z-compress the final image fil
 
 10. Done.
 
-`qemu-img` can be used to convert this `.img` disk image file to a `.vmdk` disk image file for VMware.
+`qemu-img` (provided) can be used to convert this `.img` disk image file to a `.vmdk` disk image file for VMware.

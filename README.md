@@ -15,9 +15,9 @@ TinyWin11 is provided in two flavors:
 Check out WinSetupShell's [README.md](https://github.com/59de44955ebd/WinSetupShell/blob/main/README.md) for
 more infos about the shell, like its features and restrictions, how to configure it, how to add additional programs etc.
 
-# How the disk images were created
+## How the disk images were created
 
-### Steps to create `TinyWin11_23H2_English.img` in Windows:
+Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 1. Create a 8 GB raw disk image file called `TinyWin11_23H2_English.img` e.g. with `dd`.
 

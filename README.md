@@ -2,7 +2,7 @@
 
 ![](screenshots/TinyWin11.jpg)
 
-TinyWin11 a tiny live USB (as well as VM) based on Windows 11 PE and a slightly adjusted version of custom desktop shell called [WinSetupShell](https://github.com/59de44955ebd/WinSetupShell). It's actually just a by-product of this other project.
+TinyWin11 a tiny live USB (as well as VM) based on Windows 11 PE and a slightly adjusted version of a custom desktop shell called [WinSetupShell](https://github.com/59de44955ebd/WinSetupShell). It's actually just a by-product of this other project.
 
 TinyWin11 uses the `boot.wim` of the [Win11_23H2_English_x64v2](https://archive.org/details/Win11_23H2_English_x64v2) setup .iso, with `setup.exe` (inside `boot.wim`) replaced by this custom shell, so it directly boots into a desktop session instead of the original Windows 11 setup window. Release 23H2 was used to maximize hardware compatibility (no SSE4.2 requirement), but the same thing could of course also be done with later Windows 11 setup releases like 24H2 and 25H2. Other Windows 11 hardware requirements (like 4+ GB RAM, Secure Boot and TPM 2.0) don't apply anyway, 1 GB RAM and a 20 years old PC should work fine. The only requirement is EFI/UEFI.
 

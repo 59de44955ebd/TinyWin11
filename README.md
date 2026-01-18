@@ -32,8 +32,8 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 6. Copy `autorun.inf`, `TinyWin11.ico` and the two folders `programs` and `userprofile` to the root of the mounted volume.
 
-7. Use Sysinternals' `Sdelete` (provided) to zero the free space (almost 7.3 GB)
-of this volume. This optional step allows to zip/7z-compress the final image file much more efficiently.
+7. Use Sysinternals' `SDelete` (sdelete64.exe, provided) to zero the free space (about 7.3 GB)
+of this volume. This optional step allows to zip/7z-compress the final disk image file much more efficiently.
 
 8. Unmount `TinyWin11_23H2_English.img.vhd`, again either with Explorer or DiskPart.
 

@@ -25,7 +25,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
    fsutil file createnew D:\TinyWin11_23H2_EnglishB.img 8589934592
    ```
 
-2. Rename the file to `TinyWin11_23H2_English.img.vhd` and use `VhdTool` (provided) to append a .vhd footer (just a few extra bytes) to it, then mount it in the system (using Explorer or DiskPart):
+2. Rename the file to `TinyWin11_23H2_English.img.vhd` and use `VhdTool` (provided in [tools/](tools/)) to append a .vhd footer (just a few extra bytes) to it, then mount it in the system (using Explorer or DiskPart):
    ```
    ren D:\TinyWin11_23H2_English.img TinyWin11_23H2_English.img.vhd
    vhdtool /convert D:\TinyWin11_23H2_English.img.vhd
@@ -38,7 +38,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 6. Copy `autorun.inf`, `TinyWin11.ico` and the two folders `programs` and `userprofile` to the root of the mounted volume.
 
-7. Use Sysinternals' `SDelete` (sdelete64.exe, provided) to zero the free space (about 7.3 GiB) of this volume. This will reduce the size of the converted `.vmdk` to the minimum and also allows to zip/7z-compress the final `.img` file much more efficiently:  
+7. Use Sysinternals' `SDelete` (provided in [tools/](tools/)) to zero the free space (about 7.3 GiB) of this volume. This will reduce the size of the converted `.vmdk` to the minimum and also allows to zip/7z-compress the final `.img` file much more efficiently:  
    ```
    # If F: is the volume's drive letter
    sdelete64.exe -z F:
@@ -54,7 +54,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 10. Done.
 
   
-`qemu-img` (provided) can be used to convert this `.img` disk image file to a `.vmdk` disk image file for VMware:
+`qemu-img` (provided in [tools/](tools/)) can be used to convert this `.img` disk image file to a `.vmdk` disk image file for VMware:
 ```
 qemu-img.exe convert -f raw D:\TinyWin11_23H2_English.img -O vmdk D:\TinyWin11_23H2_English.vmdk
 ```

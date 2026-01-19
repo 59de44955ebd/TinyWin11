@@ -22,7 +22,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 1. Create a 8 GiB raw disk image file called `TinyWin11_23H2_English.img` e.g. with `fsutil`:
    ```
-   fsutil file createnew D:\TinyWin11_23H2_EnglishB.img 8589934592
+   fsutil file createnew D:\TinyWin11_23H2_English.img 8589934592
    ```
 
 2. Rename the file to `TinyWin11_23H2_English.img.vhd` and use `VhdTool` (provided in [tools/](tools/)) to append a .vhd footer (just a few extra bytes) to it, then mount it in the system (using Explorer or DiskPart):
@@ -30,7 +30,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
    ren D:\TinyWin11_23H2_English.img TinyWin11_23H2_English.img.vhd
    vhdtool /convert D:\TinyWin11_23H2_English.img.vhd
    ```
-3. Start [Rufus](https://rufus.ie/en/) and let it "burn" `Win11_23H2_English_x64v2.iso` (or some other Windows 11 setup .iso) onto this mounted image. Use "GPT" as partition scheme, "UEFI (non CSM)" as target system, "NTFS" as file system and (optional) "TinyWin11" as volume label.
+3. Start [Rufus](https://rufus.ie/en/) and let it "burn" [Win11_23H2_English_x64v2.iso](https://dn721801.ca.archive.org/0/items/windows-11-23h2-english-x64v2/Win11_23H2_English_x64v2.iso) (or some other Windows 11 setup .iso) onto this mounted image. Use "GPT" as partition scheme, "UEFI (non CSM)" as target system, "NTFS" as file system and (optional) "TinyWin11" as volume label.
 
 4. When `Rufus` is done, navigate to the new Windows setup volume and in folder `sources` delete everything except for `boot.wim`. You can also delete file `setup.exe` and folder `support` in the root directory.
 
@@ -40,7 +40,7 @@ Steps to create `TinyWin11_23H2_English.img` in Windows:
 
 7. Use Sysinternals' `SDelete` (provided in [tools/](tools/)) to zero the free space (about 7.3 GiB) of this volume. This will reduce the size of the converted `.vmdk` to the minimum and also allows to zip/7z-compress the final `.img` file much more efficiently:  
    ```
-   # If F: is the volume's drive letter
+   # If F is the volume's drive letter
    sdelete64.exe -z F:
    ```
 8. Unmount `TinyWin11_23H2_English.img.vhd`, again either with Explorer or DiskPart.

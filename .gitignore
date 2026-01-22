@@ -1,3 +1,11 @@
+/*.spec
 releases/
-resources/
+build/
+dist/
 stuff/
+WinPE/
+vmware/*.lck
+vmware/*.log
+vmware/*.nvram
+vmware/*.vmdk
+/*.img

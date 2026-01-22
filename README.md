@@ -1,10 +1,8 @@
-# TinyWin11 - a Windows 11 based live USB and VM under 700 MB
+# TinyWin11 - a 540 MB Windows 11 PE based live USB and VM 
 
 ![](screenshots/TinyWin11.jpg)
 
-TinyWin11 a tiny live USB (as well as VM) based on Windows 11 PE and a slightly adjusted version of a custom desktop shell called [WinSetupShell](https://github.com/59de44955ebd/WinSetupShell). It's actually just a by-product of this other project.
-
-TinyWin11 uses the `boot.wim` of the [Win11_23H2_English_x64v2](https://archive.org/details/Win11_23H2_English_x64v2) setup .iso, with `setup.exe` (inside `boot.wim`) replaced by this custom shell, so it directly boots into a desktop session instead of the original Windows 11 setup. Release 23H2 was used to maximize hardware compatibility (no SSE4.2 requirement), but the same thing could of course also be done with later Windows 11 setup releases like 24H2 and 25H2. Other Windows 11 hardware requirements (like 4+ GB RAM, Secure Boot and TPM 2.0) don't apply anyway, 1 GB RAM and a 20 years old PC should work fine. The only requirement is EFI/UEFI boot.
+TinyWin11 a small live USB (as well as VM) based on Windows 11 PE and a slightly adjusted version of a simple custom desktop shell called [WinSetupShell](https://github.com/59de44955ebd/WinSetupShell). It's actually just a by-product of this other project.
 
 TinyWin11 is provided in two flavors:
 
@@ -13,48 +11,26 @@ TinyWin11 is provided in two flavors:
 
 - as raw disk image (.img) that can be used to create a bootable USB drive using tools like [dd](https://en.wikipedia.org/wiki/Dd_(Unix)), [Etcher](https://etcher.balena.io/) or [Rufus](https://rufus.ie/en/).
 
-Check out WinSetupShell's [README.md](https://github.com/59de44955ebd/WinSetupShell/blob/main/README.md) for
-more infos about the shell: its features and restrictions, how to configure it, how to add additional programs (like e.g. a web browser) etc.
+See WinSetupShell's [README.md](https://github.com/59de44955ebd/WinSetupShell/blob/main/README.md) for features and restrictions of this simple desktop shell and how to configure it, how to add additional programs (like e.g. a web browser) etc.
 
-## How the disk images were created
+## Building
 
-Steps to create `TinyWin11_23H2_English.img` in Windows:
+### Requirements
 
-1. Create a 8 GiB raw disk image file called `TinyWin11_23H2_English.img` e.g. with `fsutil`:
-   ```
-   fsutil file createnew D:\TinyWin11_23H2_English.img 8589934592
-   ```
+- [Python 3](https://python.org/) and [pyinstaller](https://pypi.org/project/pyinstaller/) for building the shell.
 
-2. Rename the file to `TinyWin11_23H2_English.img.vhd` and use `VhdTool` (provided in [tools/](tools/)) to append a .vhd footer (just a few extra bytes) to it, then mount it in the system (using Explorer or DiskPart):
-   ```
-   ren D:\TinyWin11_23H2_English.img TinyWin11_23H2_English.img.vhd
-   vhdtool /convert D:\TinyWin11_23H2_English.img.vhd
-   ```
-3. Start [Rufus](https://rufus.ie/en/) and let it "burn" [Win11_23H2_English_x64v2.iso](https://dn721801.ca.archive.org/0/items/windows-11-23h2-english-x64v2/Win11_23H2_English_x64v2.iso) (or some other Windows 11 setup .iso) onto this mounted image. Use "GPT" as partition scheme, "UEFI (non CSM)" as target system, "NTFS" as file system and (optional) "TinyWin11" as volume label.
+- [ADK for Windows 11, version 22H2](https://go.microsoft.com/fwlink/?linkid=2196127)  
+  (only the "Deployment Tools" have to be installed)
 
-4. When `Rufus` is done, navigate to the new Windows setup volume and in folder `sources` delete everything except for `boot.wim`. You can also delete file `setup.exe` and folder `support` in the root directory.
+- [Windows PE add-on for the ADK for Windows 11, version 22H2](https://go.microsoft.com/fwlink/?linkid=2196224)  
+  Microsoft recommends to apply the [2023-05 Cumulative Update for Windows 11 for x64-based Systems (KB5026368)](https://catalog.s.download.windowsupdate.com/d/msdownload/update/software/secu/2023/05/windows10.0-kb5026368-x64_a5523f98635d9c2b93f2f2144e5bacab7ff7d838.msu) to the PE, which only has to be done once.
 
-5. Open this remaining `boot.wim` with [7-Zip](https://7-zip.org/), and inside the .wim file in folder "2" replace the original `setup.exe` with the provided `setup.exe` that starts the shell. Also copy folder `shell_data` into folder "2". Then close `7-Zip`.
+Version 22H2 is used to maximize hardware compatibility (no SSE4.2 requirement), but later Windows 11 PE versions could be used instead. Other Windows 11 hardware requirements (like 4+ GB RAM, Secure Boot and TPM 2.0) don't apply anyway, 1 GB RAM and a 20 years old PC should work fine.
 
-6. Copy `autorun.inf`, `TinyWin11.ico` and the two folders `programs` and `userprofile` to the root of the mounted volume.
+### Building the shell
 
-7. Use Sysinternals' `SDelete` (provided in [tools/](tools/)) to zero the free space (about 7.3 GiB) of this volume. This will reduce the size of the converted `.vmdk` to the minimum and also allows to zip/7z-compress the final `.img` file much more efficiently:  
-   ```
-   # If F is the volume's drive letter
-   sdelete64.exe -z F:
-   ```
-8. Unmount `TinyWin11_23H2_English.img.vhd`, again either with Explorer or DiskPart.
+Run `make_shell.cmd`
 
-9. Remove the last 512 bytes (the VHD footer) with `fsutil` and rename the file back to `TinyWin11_23H2_English.img`:
-   ```
-   fsutil file seteof D:\TinyWin11_23H2_English.img.vhd 8589934592
-   ren D:\TinyWin11_23H2_English.img.vhd TinyWin11_23H2_English.img
-   ```
+### Building the system and the .img and .vmdk disk images
 
-10. Done.
-
-  
-`qemu-img` (provided in [tools/](tools/)) can be used to convert this `.img` disk image file to a `.vmdk` disk image file for VMware:
-```
-qemu-img.exe convert -f raw D:\TinyWin11_23H2_English.img -O vmdk D:\TinyWin11_23H2_English.vmdk
-```
+Run `make_system.cmd` from an elevated CMD prompt.

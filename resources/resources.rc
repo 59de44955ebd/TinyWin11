@@ -1,0 +1,82 @@
+#include "resources.h"
+
+IDI_APP ICON "app.ico"
+
+IDI_START_DARK ICON "start-dark.ico"
+IDI_START_LIGHT ICON "start-light.ico"
+
+IDI_NETWORK_DARK ICON "icon-network-dark.ico"
+IDI_NETWORK_LIGHT ICON "icon-network-light.ico"
+
+IDI_USB_DARK ICON "icon-usb-dark.ico"
+IDI_USB_LIGHT ICON "icon-usb-light.ico"
+
+IDI_BATTERY_DARK ICON "icon-battery-dark.ico"
+IDI_BATTERY_LIGHT ICON "icon-battery-light.ico"
+
+IDI_KEYBOARD_DARK ICON "icon-keyboard-dark.ico"
+IDI_KEYBOARD_LIGHT ICON "icon-keyboard-light.ico"
+
+1 VERSIONINFO
+FILEVERSION 0,12,0,0
+PRODUCTVERSION 0,12,0,0
+FILEOS 0x40004
+FILETYPE 0x1
+{
+BLOCK "StringFileInfo"
+{
+	BLOCK "040904B0"
+	{
+		VALUE "CompanyName", "59de44955ebd"
+		VALUE "FileDescription", "PyShell"
+		VALUE "FileVersion", "0.12.0.0)"
+		VALUE "InternalName", "PyShell"
+		VALUE "OriginalFilename", "shell.exe"
+		VALUE "ProductName", "PyShell"
+		VALUE "ProductVersion", "0,12,0,0"
+	}
+}
+
+BLOCK "VarFileInfo"
+{
+	VALUE "Translation", 0x0409 0x04B0
+}
+}
+
+POPUP_MENU_START MENU
+BEGIN
+  POPUP "Popup"
+  BEGIN
+    MENUITEM "== PyShell ==",-1,GRAYED
+    MENUITEM SEPARATOR
+//    MENUITEM "Restart Shell",IDM_RESTART
+//    MENUITEM "Exit",IDM_QUIT
+  END
+END
+
+POPUP_MENU_START_MENU_ITEM MENU
+BEGIN
+  POPUP "Popup"
+  BEGIN
+    MENUITEM "Open Explorer++ here",IDM_OPEN_LOCATION
+    MENUITEM "Open CMD here",IDM_OPEN_CMD
+//    MENUITEM "Open PowerShell here",IDM_OPEN_POWERSHELL
+  END
+END
+
+POPUP_MENU_TASKS MENU
+BEGIN
+  POPUP "Popup"
+  BEGIN
+    MENUITEM "Task Manager\tWin+Alt+Del",IDM_OPEN_TASKMANAGER
+  END
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+  IDS_SAFELY_REMOVE_HARDWARE "Safely remove hardware"
+  IDS_BATTERY_STATUS "Battery status"
+  IDS_BATTERY_STATUS_FMT "Battery status: {}%"
+  IDS_BATTERY_TIME_REMAINING_FMT "\n({} hr {} min remaining)"
+  IDS_NETWORK_OFFLINE "Network status: offline"
+END

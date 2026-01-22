@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<Foundry>
-<VM>
-<VMId type="string">52 51 16 07 15 6f e9 c2-8a 69 18 7f 57 b8 1d 1f</VMId>
-<ClientMetaData>
-<clientMetaDataAttributes/>
-<HistoryEventList/></ClientMetaData>
-<vmxPathName type="string">Win11PE.vmx</vmxPathName></VM><tools-install-info><installError>21004</installError><updateCounter>2</updateCounter></tools-install-info></Foundry>

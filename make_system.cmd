@@ -5,7 +5,7 @@ set "CWD=%CD%"
 set PATH=%CD%\tools;%PATH%
 
 REM Config ################################################
-set BASENAME=TinyWin11_23H2_English
+set BASENAME=TinyWin11_22H2_English
 set IMG_SIZE=4294967296
 set DRIVE_LETTER=Z
 REM /Config ###############################################

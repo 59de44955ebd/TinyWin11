@@ -1,4 +1,4 @@
-# TinyWin11 - a 540 MB Windows 11 PE based live USB and VM 
+# TinyWin11 - a 580 MB Windows 11 PE based live USB and VM 
 
 ![](screenshots/TinyWin11.jpg)
 
@@ -17,15 +17,12 @@ See WinSetupShell's [README.md](https://github.com/59de44955ebd/WinSetupShell/bl
 
 ### Requirements
 
-- [Python 3](https://python.org/) and [pyinstaller](https://pypi.org/project/pyinstaller/) for building the shell.
+- [Python 3](https://python.org/) and [pyinstaller](https://pypi.org/project/pyinstaller/) on Windows for building the shell.
 
-- [ADK for Windows 11, version 22H2](https://go.microsoft.com/fwlink/?linkid=2196127)  
-  (only the "Deployment Tools" have to be installed)
+- [Windows ADK 10.1.26100.2454](https://go.microsoft.com/fwlink/?linkid=2289980)  
+  (only the "Deployment Tools" need to be installed)
 
-- [Windows PE add-on for the ADK for Windows 11, version 22H2](https://go.microsoft.com/fwlink/?linkid=2196224)  
-  Microsoft recommends to apply the [2023-05 Cumulative Update for Windows 11 for x64-based Systems (KB5026368)](https://catalog.s.download.windowsupdate.com/d/msdownload/update/software/secu/2023/05/windows10.0-kb5026368-x64_a5523f98635d9c2b93f2f2144e5bacab7ff7d838.msu) to the PE, which only has to be done once.
-
-Version 22H2 is used to maximize hardware compatibility (no SSE4.2 requirement), but later Windows 11 PE versions could be used instead. Other Windows 11 hardware requirements (like 4+ GB RAM, Secure Boot and TPM 2.0) don't apply anyway, 1 GB RAM and a 20 years old PC should work fine.
+- [Windows PE add-on for the Windows ADK 10.1.26100.2454](https://go.microsoft.com/fwlink/?linkid=2289981)  
 
 ### Building the shell
 

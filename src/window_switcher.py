@@ -1,11 +1,11 @@
 import sys
 from math import ceil, sqrt
 from winapp.const import *
+from winapp.controls.static import *
 from winapp.controls.toolbar import *
 from winapp.dlls import *
 from winapp.mainwin import *
 from winapp.shellapi_min import *
-#from config import TASK_CLASSES_IGNORE
 from resources import IDM_SHOW_WINDOW_SWITCHER
 
 ICON_SIZE = 48
@@ -50,6 +50,13 @@ class WindowSwitcher(MainWin):
             hide_text = True
         )
 
+        self.static = Static(
+            self,
+            style = WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | SS_WORDELLIPSIS,
+        )
+        self.static.set_font()
+        self.static.apply_theme(True)
+
         self.hwnd_tooltips = self.toolbar.send_message(TB_GETTOOLTIPS, 0, 0)
 
         self.toolbar.send_message(TB_SETPADDING, 0, MAKELONG(PADDING, PADDING))
@@ -86,6 +93,8 @@ class WindowSwitcher(MainWin):
                     self.set_checked((self.checked_index - 1) % self.num_windows)
                 else:
                     self.set_checked((self.checked_index + 1) % self.num_windows)
+
+                self.static.set_window_text(self.windows[self.checked_index][2])
 
             elif wparam == VK_RETURN:
                 self.do_switch(self.checked_index)
@@ -135,7 +144,7 @@ class WindowSwitcher(MainWin):
         self.num_rows = ceil(self.num_windows / self.num_cols)
 
         win_width = self.num_cols * (ICON_SIZE + PADDING) + 2 * INDENT
-        win_height = self.num_rows * (ICON_SIZE + PADDING)
+        win_height = self.num_rows * (ICON_SIZE + PADDING) + 24 + INDENT
 
         tb_buttons = (TBBUTTON * self.num_windows)()
         for i in range(self.num_windows):
@@ -152,6 +161,18 @@ class WindowSwitcher(MainWin):
 
         self.toolbar.send_message(TB_ADDBUTTONS, self.num_windows, tb_buttons)
         self.toolbar.send_message(TB_SETSTATE, self.checked_index, TBSTATE_ENABLED | TBSTATE_CHECKED)
+
+        user32.SetWindowPos(
+            self.static.hwnd,
+            0,
+            INDENT,
+            win_height - 20 - INDENT,
+            win_width - 2 * INDENT,
+            18,
+            SWP_SHOWWINDOW
+        )
+
+        self.static.set_window_text(self.windows[self.checked_index][2])
 
         user32.SetWindowPos(
             self.hwnd,
@@ -218,10 +239,6 @@ class WindowSwitcher(MainWin):
                 win_text = buf.value
                 if win_text == '':
                     return 1
-
-#                user32.GetClassNameW(hwnd, buf, MAX_PATH)
-#                if buf.value in TASK_CLASSES_IGNORE:
-#                    return 1
 
                 path = get_module_path(get_window_pid(hwnd))
                 if path:

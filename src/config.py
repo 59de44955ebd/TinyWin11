@@ -17,8 +17,8 @@ DESKTOP_SNAP_TO_GRID = True
 DESKTOP_WALLPAPER = "%USERPROFILE%\\AppData\\wallpaper.jpg"
 DESKTOP_ITEMS = [
     "ThisPC",
-#    "Documents",
-#    "Downloads",
+    "Documents",
+    "Downloads",
     "RecycleBin"
 ]
 

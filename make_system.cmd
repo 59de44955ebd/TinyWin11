@@ -5,7 +5,7 @@ set "CWD=%CD%"
 set PATH=%CD%\tools;%PATH%
 
 REM Config ################################################
-set BASENAME=TinyWin11_22H2_English
+set BASENAME=TinyWin11_English
 set IMG_SIZE=4294967296
 set DRIVE_LETTER=Z
 REM /Config ###############################################
@@ -17,7 +17,11 @@ set "IMG_FILE=%TARGET_DIR%\%BASENAME%.img"
 set "VHD_FILE=%TARGET_DIR%\%BASENAME%.vhd"
 set "VMDK_FILE=%TARGET_DIR%\vmware\%BASENAME%.vmdk"
 
-call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
+REM call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
+
+REM call "D:\dev\adk\22H2\Deployment Tools\DandISetEnv.bat
+call "D:\dev\adk\10.1.26100.2454\Deployment Tools\DandISetEnv.bat
+
 cd /d "%CWD%"
 
 REM Clean up old stuff

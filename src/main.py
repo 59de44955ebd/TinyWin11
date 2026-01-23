@@ -168,6 +168,7 @@ class Main(MainWin):
             window_class = APP_CLASS,
             style = WS_POPUP,
             ex_style = WS_EX_TOOLWINDOW,
+            h_accel = user32.LoadAcceleratorsW(HMOD_RESOURCES, MAKEINTRESOURCEW(1)),
             h_brush = DARK_TASKBAR_BG_BRUSH if IS_DARK else COLOR_3DFACE + 1,
         )
 
@@ -210,6 +211,14 @@ class Main(MainWin):
         self.COMMAND_MESSAGE_MAP = {
             IDM_QUIT:                   self.quit,
             IDM_DEBUG_TOGGLE_CONSOLE:   self.toggle_console,
+
+            # Accelerators
+            IDM_CUT:                    self.desktop.action_cut,
+            IDM_COPY:                   self.desktop.action_copy,
+            IDM_PASTE:                  self.desktop.action_paste,
+            IDM_DELETE:                 self.desktop.action_delete,
+            IDM_REFRESH:                self.desktop.action_refresh,
+            IDM_SELECT_ALL:             self.desktop.action_select_all,
 
             # hotkeys
             IDM_OPEN_TASKMANAGER:       lambda: shell32.ShellExecuteW(self.hwnd, 'open', os.path.expandvars('%windir%\\System32\\taskmgr.exe'), None, None, SW_SHOWNORMAL),

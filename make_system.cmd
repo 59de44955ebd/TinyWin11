@@ -17,11 +17,7 @@ set "IMG_FILE=%TARGET_DIR%\%BASENAME%.img"
 set "VHD_FILE=%TARGET_DIR%\%BASENAME%.vhd"
 set "VMDK_FILE=%TARGET_DIR%\vmware\%BASENAME%.vmdk"
 
-REM call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
-
-REM call "D:\dev\adk\22H2\Deployment Tools\DandISetEnv.bat
-call "D:\dev\adk\10.1.26100.2454\Deployment Tools\DandISetEnv.bat
-
+call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
 cd /d "%CWD%"
 
 REM Clean up old stuff
@@ -68,12 +64,12 @@ echo ====================================
 echo Updating boot.wim...
 echo ====================================
 
-dism /Mount-Wim /MountDir:"%WINPE_DIR%\mount" /wimfile:"%WINPE_DIR%\media\sources\boot.wim" /index:1
+dism /mount-wim /mountdir:"%WINPE_DIR%\mount" /wimfile:"%WINPE_DIR%\media\sources\boot.wim" /index:1
 
 REM Add PowerShell
-Dism /Image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-WMI.cab"
-Dism /Image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-NetFx.cab"
-Dism /Image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-PowerShell.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-WMI.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-NetFx.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-PowerShell.cab"
 
 REM Copy fonts to Windows\fonts\
 xcopy /q /y data\fonts\* "%WINPE_DIR%\mount\Windows\Fonts\"
@@ -81,10 +77,10 @@ xcopy /q /y data\fonts\* "%WINPE_DIR%\mount\Windows\Fonts\"
 REM Copy contents of bin to Windows\System32
 xcopy /q /y /e data\bin\* "%WINPE_DIR%\mount\Windows\System32\"
 
-dism /Unmount-Wim /MountDir:"%WINPE_DIR%\mount" /commit
+dism /unmount-wim /mountdir:"%WINPE_DIR%\mount" /commit
 
 REM Clean up
-dism /Export-Image /SourceImageFile:"%WINPE_DIR%\media\sources\boot.wim" /SourceIndex:1 /DestinationImageFile:"%WINPE_DIR%\media\sources\boot_cleaned.wim"
+dism /export-image /sourceimagefile:"%WINPE_DIR%\media\sources\boot.wim" /SourceIndex:1 /destinationimagefile:"%WINPE_DIR%\media\sources\boot_cleaned.wim"
 del /f "%WINPE_DIR%\media\sources\boot.wim"
 ren "%WINPE_DIR%\media\sources\boot_cleaned.wim" boot.wim
 

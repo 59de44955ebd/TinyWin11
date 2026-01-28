@@ -11,14 +11,24 @@ if errorlevel 1 (
 	rd /s /q "%ADMINTESTDIR%"
 )
 
-cd /d %~dp0
-set "CWD=%CD%"
-set PATH=%CD%\tools;%PATH%
+REM ################################################
+REM Config
+REM ################################################
 
-REM Config ################################################
-set BASENAME=TinyWin11_English
+REM When ADK is in the default installation directory
+set "ADK_DIR=C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit"
+
+REM When ADK is in a custom diretory (as in my case)
+REM set "ADK_DIR=D:\dev\adk\10.1.26100.2454"
+
+REM 4 GiB
 set IMG_SIZE=4294967296
-REM /Config ###############################################
+
+set BASENAME=TinyWin11_English
+
+REM ################################################
+REM /Config
+REM ################################################
 
 REM Find unused drive letter
 for %%a in (Z Y X W V U T S R Q P O N M L K J I H G F E D C) do if not exist %%a:\\ set DRIVE_LETTER=%%a
@@ -27,18 +37,17 @@ if "%DRIVE_LETTER%" == "" (
 	goto :eof
 )
 
+cd /d %~dp0
+set "CWD=%CD%"
+set PATH=%CD%\tools;%PATH%
+
 set "TARGET_DIR=%CWD%"
 set "WINPE_DIR=%CWD%\WinPE"
-
 set "IMG_FILE=%TARGET_DIR%\%BASENAME%.img"
 set "VHD_FILE=%TARGET_DIR%\%BASENAME%.vhd"
 set "VMDK_FILE=%TARGET_DIR%\vmware\%BASENAME%.vmdk"
 
-REM When ADK is in the default installation directory
-call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
-
-REM When ADK is in a custom diretory (as in my case)
-REM call "D:\dev\adk\10.1.26100.2454\Deployment Tools\DandISetEnv.bat"
+call "%ADK_DIR%\Deployment Tools\DandISetEnv.bat"
 
 REM DandISetEnv.bat has the bad habit to change the CWD, revert this
 cd /d "%CWD%"

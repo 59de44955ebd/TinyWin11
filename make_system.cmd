@@ -1,4 +1,15 @@
 @echo off
+setlocal
+
+REM Make sure the user has administrator privileges
+set ADMINTESTDIR=%WINDIR%\System32\Test_%RANDOM%
+mkdir "%ADMINTESTDIR%" 2>NUL
+if errorlevel 1 (
+	echo ERROR: You need to run this command with administrator privileges.
+	goto :eof
+) else (
+	rd /s /q "%ADMINTESTDIR%"
+)
 
 cd /d %~dp0
 set "CWD=%CD%"
@@ -7,8 +18,14 @@ set PATH=%CD%\tools;%PATH%
 REM Config ################################################
 set BASENAME=TinyWin11_English
 set IMG_SIZE=4294967296
-set DRIVE_LETTER=Z
 REM /Config ###############################################
+
+REM Find unused drive letter
+for %%a in (Z Y X W V U T S R Q P O N M L K J I H G F E D C) do if not exist %%a:\\ set DRIVE_LETTER=%%a
+if "%DRIVE_LETTER%" == "" (
+	echo ERROR: Failed to find an unused drive letter.
+	goto :eof
+)
 
 set "TARGET_DIR=%CWD%"
 set "WINPE_DIR=%CWD%\WinPE"
@@ -17,7 +34,13 @@ set "IMG_FILE=%TARGET_DIR%\%BASENAME%.img"
 set "VHD_FILE=%TARGET_DIR%\%BASENAME%.vhd"
 set "VMDK_FILE=%TARGET_DIR%\vmware\%BASENAME%.vmdk"
 
+REM When ADK is in the default installation directory
 call "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\DandISetEnv.bat"
+
+REM When ADK is in a custom diretory (as in my case)
+REM call "D:\dev\adk\10.1.26100.2454\Deployment Tools\DandISetEnv.bat"
+
+REM DandISetEnv.bat has the bad habit to change the CWD, revert this
 cd /d "%CWD%"
 
 REM Clean up old stuff
@@ -51,7 +74,6 @@ echo Creating WinPE dir...
 echo ====================================
 call copype amd64 "%WINPE_DIR%" >nul
 cd /d "%CWD%"
-::echo on
 
 echo.
 echo ====================================

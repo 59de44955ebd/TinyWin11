@@ -16,7 +16,7 @@
 	#"IS_DARK": False,
 
 	# Hide Documents and Downloads
-	#"DESKTOP_ITEMS": ["ThisPC", "Documents", "RecycleBin"],
+	#"DESKTOP_ITEMS": ["ThisPC", "RecycleBin"],
 
 	# Increase taskbar and icon size by factor 2
 	#"SCALE": 2,

@@ -15,11 +15,13 @@ REM ################################################
 REM Config
 REM ################################################
 
-REM When ADK is in the default installation directory
-set "ADK_DIR=C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit"
-
-REM When ADK is in a custom diretory (as in my case)
-REM set "ADK_DIR=D:\dev\adk\10.1.26100.2454"
+if exist "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\" (
+	REM When ADK is in the default installation directory
+	set "ADK_DIR=C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit"
+) else (
+	REM When ADK is in a custom diretory (as in my case)
+	set "ADK_DIR=D:\dev\adk\10.1.26100.2454"
+)
 
 REM 4 GiB
 set IMG_SIZE=4294967296
@@ -75,7 +77,7 @@ echo.
 echo ====================================
 echo Mounting VHD disk image...
 echo ====================================
-(echo select vdisk file="%VHD_FILE%" & echo attach vdisk & echo create partition primary & echo select partition 1 & echo format fs=fat32 quick & echo assign letter=%DRIVE_LETTER% & echo exit) | diskpart
+(echo select vdisk file="%VHD_FILE%" & echo attach vdisk & echo create partition primary & echo select partition 1 & echo format fs=ntfs quick & echo assign letter=%DRIVE_LETTER% & echo exit) | diskpart
 
 echo.
 echo ====================================
@@ -99,8 +101,22 @@ dism /mount-wim /mountdir:"%WINPE_DIR%\mount" /wimfile:"%WINPE_DIR%\media\source
 
 REM Add PowerShell
 dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-WMI.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+
 dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-NetFx.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-NetFX_en-us.cab"
+
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-Scripting.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-Scripting_en-us.cab"
+
 dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-PowerShell.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-PowerShell_en-us.cab"
+
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-StorageWMI.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-StorageWMI_en-us.cab"
+
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\WinPE-DismCmdlets.cab"
+dism /image:"%WINPE_DIR%\mount" /Add-Package /PackagePath:"%WinPERoot%\amd64\WinPE_OCs\en-us\WinPE-DismCmdlets_en-us.cab"
 
 REM Copy fonts to Windows\fonts\
 xcopy /q /y data\fonts\* "%WINPE_DIR%\mount\Windows\Fonts\"

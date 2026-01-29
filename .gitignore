@@ -9,3 +9,4 @@ vmware/*.log
 vmware/*.nvram
 vmware/*.vmdk
 /*.img
+data/userprofile/AppData/Local/*

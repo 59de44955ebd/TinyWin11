@@ -21,15 +21,14 @@ if IS_FROZEN:
 
     PROGS_DIR = f'{drive_letter}:\\programs'
     USERPROFILE_DIR = f'{drive_letter}:\\userprofile'
+    BIN_DIR = 'X:\\Windows\\System32'
 else:
     APP_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-    PROGS_DIR = os.path.realpath(os.path.join(APP_DIR, 'programs'))
-    USERPROFILE_DIR = os.path.join(APP_DIR, 'userprofile')
+    PROGS_DIR = os.path.realpath(os.path.join(APP_DIR, 'data', 'programs'))
+    USERPROFILE_DIR = os.path.join(APP_DIR, 'data', 'userprofile')
+    BIN_DIR = os.path.join(APP_DIR, 'data', 'bin')
 
-EXPLORER = os.path.join(PROGS_DIR, 'Explorer++', 'Explorer++.exe')
-
-#BIN_DIR = os.path.join(APP_DIR, 'bin')
-BIN_DIR = 'X:\\Windows\\System32'
+#EXPLORER = os.path.join(PROGS_DIR, 'Explorer++', 'Explorer++.exe')
 
 if not os.path.isdir(USERPROFILE_DIR):
     os.mkdir(USERPROFILE_DIR)

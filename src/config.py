@@ -3,9 +3,7 @@ from const import APPDATA_DIR
 
 IS_DARK = True
 DEBUG = False
-
-# 0 = auto
-SCALE = 0
+SCALE = 0  # 0 = auto
 
 DESKTOP_ICON_SIZE = 32
 DESKTOP_ICON_SPACING_HORIZONTAL = 50  # Win 11 default: 75
@@ -14,12 +12,13 @@ DESKTOP_BG_COLOR = 0xAA7312
 DESKTOP_TEXT_COLOR = 0xFFFFFF
 DESKTOP_HOT_ITEM_BORDER_COLOR = 0xD47800
 DESKTOP_SNAP_TO_GRID = True
-DESKTOP_WALLPAPER = "%USERPROFILE%\\AppData\\wallpaper.jpg"
+DESKTOP_RECYCLEBIN_POLL_PERIOD_MS = 3000
+DESKTOP_WALLPAPER = '%USERPROFILE%\\AppData\\wallpaper.jpg'
 DESKTOP_ITEMS = [
-    "ThisPC",
-    "Documents",
-    "Downloads",
-    "RecycleBin"
+    'ThisPC',
+    'Documents',
+    'Downloads',
+    'RecycleBin'
 ]
 
 TASKBAR_HEIGHT = 30
@@ -49,7 +48,11 @@ TASK_PADDING = 12
 TRAY_PADDING = 12
 SHOW_DESKTOP_PADDING = 10
 
-POWERSHELL = "%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+CMD = '%windir%\\System32\\cmd.exe'
+FILE_MANAGER = '%programs%\\Explorer++\\Explorer++.exe'
+POWERSHELL = '%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+SEARCH_APP = '%programs%\\SwiftSearch\\SwiftSearch64.exe'
+TASK_MANAGER = '%windir%\\System32\\taskmgr.exe'
 
 # Overwrite variables with values from config.pson
 try:

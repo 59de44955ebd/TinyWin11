@@ -2,6 +2,6 @@
 [
 	["Explorer++", "%PROGRAMS%\\Explorer++\\Explorer++.exe"],
 	["CMD", "%windir%\\System32\\cmd.exe"],
-	["PowerShell", "%windir%\\System32\\cmd.exe,/k powershell", "powershell.ico"],
+	["PowerShell", "%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"],
 	["Notepad", "%windir%\\Notepad.exe"],
 ]

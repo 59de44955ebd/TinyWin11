@@ -1,4 +1,4 @@
-# TinyWin11 - a 580 MB Windows 11 PE based live USB and VM 
+# TinyWin11 - a minimal Windows 11 PE based live USB and VM 
 
 ![](screenshots/TinyWin11.jpg)
 
